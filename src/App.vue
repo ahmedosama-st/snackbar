@@ -1,26 +1,31 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <a href="#" @click.prevent="triggerSnack">Trigger snack</a>
+  <Snack />
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import Snack from '@/components/Snack';
+import useSnack from '@/composables/useSnack';
+import { useStore } from 'vuex';
 
 export default {
   name: 'App',
-  components: {
-    HelloWorld
-  }
-}
+  components: { Snack },
+
+  setup() {
+    const store = useStore();
+
+    function triggerSnack() {
+      useSnack(store, {
+        text: 'This is a snack',
+      });
+    }
+
+    return {
+      triggerSnack,
+    };
+  },
+};
 </script>
 
-<style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
+<style src="@/assets/styles/main.css" />
